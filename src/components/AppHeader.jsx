@@ -7,7 +7,6 @@ function App({ addtask }) {
 
   const getMode = () => {
     let mode = "lightmode";
-    console.log(localStorage.getItem("theme"));
     if (localStorage.getItem("theme")) { 
       mode = localStorage.getItem("theme");
       return mode;
@@ -21,7 +20,6 @@ function App({ addtask }) {
   }
 
   useEffect(() => {
-    console.log(Theme, "useeffect");
     if (Theme === "lightmode") {
       document.body.classList.remove("darkmode");
     } else {
