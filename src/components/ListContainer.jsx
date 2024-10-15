@@ -5,24 +5,33 @@ import Filters from "./Filters";
 import Tasklist from "./Tasklist";
 
 const Tasks = () => {
-  const [alltasks, setTasks] = useState([]);
-  const [tasksToDisplay, setTasksToDisplay] = useState([]);
+  const getTodos = () => {
+    let todos = [];
+    if (localStorage.getItem("tasks")) { 
+      todos = JSON.parse(localStorage.getItem("tasks"));
+      return todos;
+    }
+    return todos;
+  }
+
+  const [alltasks, setTasks] = useState(getTodos);
+
   const addtask = (task) => {
     const todo = { todo: task, isCompleted: false, id: uuidv4() };
     setTasks([...alltasks, todo]);
   };
+
   const clearCompleted = () => {
     const Tasks = alltasks.filter((task) => !task.isCompleted);
     setTasks(Tasks);
   };
 
+  const [tasksToDisplay, setTasksToDisplay] = useState([]);
+
   useEffect(() => {}, [tasksToDisplay]);
 
   useEffect(() => {
-    const todos = JSON.parse(localStorage.getItem("tasks"));
-    if (todos) { 
-      setTasks(todos);
-    }
+
   }, []);
   
   useEffect(() => {
@@ -33,7 +42,7 @@ const Tasks = () => {
   
   return (
     <div className="container">
-      <AppHeader addtask={addtask} />
+      <AppHeader addtask={addtask} alltasks={alltasks}/>
       <div className="box-container tasks">
         {tasksToDisplay && (
           <Tasklist

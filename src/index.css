@@ -146,6 +146,8 @@ img:last-child{
 } 
 
 .items-left {
+    margin-top: 0.125em;
+    padding-top: 0.125em;
     opacity: .7;
 }
 
@@ -216,12 +218,12 @@ img:last-child{
 
 /* darkmode */
 
-/* .darkmode {
+.darkmode {
     background-color: hsl(235, 21%, 11%);
 }
 
 .darkmode header {
-    background-image: url(images/bg-mobile-dark.jpg);
+    background-image: url(assets/bg-desktop-dark.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     height: 200px;
@@ -274,7 +276,7 @@ img:last-child{
 
 @media (min-width:500px) {
     .darkmode header {
-        background-image: url(images/bg-desktop-dark.jpg);
+        background-image: url(assets/bg-mobile-dark.jpg);
         background-repeat: no-repeat;
     } 
-} */
+}

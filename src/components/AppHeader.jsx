@@ -1,11 +1,39 @@
-import { useState } from "react";
-import modeicon from "../assets/icon-moon.svg";
+import { useEffect, useState } from "react";
+import moonicon from "../assets/icon-moon.svg";
+import sunicon from "../assets/icon-sun.svg";
 
 function App({ addtask }) {
   const [value, setValue] = useState("");
+
+  const getMode = () => {
+    let mode = "lightmode";
+    console.log(localStorage.getItem("theme"));
+    if (localStorage.getItem("theme")) { 
+      mode = localStorage.getItem("theme");
+      return mode;
+    } 
+    return mode;
+  }
+  const [Theme, setTheme] = useState(getMode);
+
+  const changemode = () => {
+    setTheme(prev => prev === 'lightmode' ? 'darkmode' : 'lightmode');
+  }
+
+  useEffect(() => {
+    console.log(Theme, "useeffect");
+    if (Theme === "lightmode") {
+      document.body.classList.remove("darkmode");
+    } else {
+      document.body.classList.add("darkmode");
+    }
+    localStorage.setItem("theme", Theme)
+  }, [Theme]);
+
   const handleChange = (e) => {
     setValue(e.target.value);
   };
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     addtask(value);
@@ -18,7 +46,7 @@ function App({ addtask }) {
         <h2>
           T O D O
           <span className="mode">
-            <img src={modeicon} alt="mode" className="modeimg" />
+            <img src={Theme === "darkmode" ? sunicon : moonicon} alt="mode" className="modeimg" onClick={changemode}/>
           </span>
         </h2>
         <input
