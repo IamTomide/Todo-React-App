@@ -1,11 +1,14 @@
+import React, { Component, useState } from "react";
+import { ReactSortable } from "react-sortablejs";
 import checkicon from "../assets/icon-check.svg";
 import crossicon from "../assets/icon-cross.svg";
 
-const Task = ({ alltasks, setTasksToDisplay,setTasks }) => {
+const Task = ({ alltasks, setTasksToDisplay, setTasks }) => {
+  const [isSorting, setIsSorting] = useState(false);
   const handleTick = (id) => {
     const updatedTasks = alltasks.map((task) => {
       if (task.id === id) {
-        const prevCompleted = task.isCompleted
+        const prevCompleted = task.isCompleted;
         return { ...task, isCompleted: !prevCompleted };
       }
       return task;
@@ -14,17 +17,37 @@ const Task = ({ alltasks, setTasksToDisplay,setTasks }) => {
   };
 
   const handleDelete = (id) => {
-      const updatedTasks = alltasks.filter(task => task.id !== id);
+    const updatedTasks = alltasks.filter((task) => task.id !== id);
 
-      setTasks(updatedTasks);
-  }
+    setTasks(updatedTasks);
+  };
+
+  const updateOrder = (updatedList) => {
+    if (!isSorting) return;
+    setIsSorting(false);
+    setTasks(updatedList);
+  };
 
   return (
-    <ul className="tasklist">
+    // <ul>
+    <ReactSortable
+      tag="ul"
+      list={alltasks}
+      onStart={() => setIsSorting(true)}
+      setList={(updatedList) => updateOrder(updatedList)}
+      animation={150}
+      delayOnTouchStart={true}
+      delay={120}
+    >
       {alltasks.map((task) => (
         <li key={task.id}>
-          <div onClick={(id) => handleTick(task.id)} className={task.isCompleted ? "check" : ""}>
-            <button className={task.isCompleted ? "tocheck checked" : "tocheck"}>
+          <div
+            onClick={(id) => handleTick(task.id)}
+            className={task.isCompleted ? "check" : ""}
+          >
+            <button
+              className={task.isCompleted ? "tocheck checked" : "tocheck"}
+            >
               <img
                 src={checkicon}
                 alt="check"
@@ -38,7 +61,8 @@ const Task = ({ alltasks, setTasksToDisplay,setTasks }) => {
           </button>
         </li>
       ))}
-    </ul>
+    </ReactSortable>
+    // </ul>
   );
 };
 

@@ -7,14 +7,14 @@ import Tasklist from "./Tasklist";
 const Tasks = () => {
   const getTodos = () => {
     let todos = [];
-    if (localStorage.getItem("tasks")) { 
+    if (localStorage.getItem("tasks")) {
       todos = JSON.parse(localStorage.getItem("tasks"));
       return todos;
     }
     return todos;
-  }
+  };
 
-  const [alltasks, setTasks] = useState(getTodos);
+  const [alltasks, setTasks] = useState(() => getTodos());
 
   const addtask = (task) => {
     const todo = { todo: task, isCompleted: false, id: uuidv4() };
@@ -30,19 +30,17 @@ const Tasks = () => {
 
   useEffect(() => {}, [tasksToDisplay]);
 
-  useEffect(() => {
+  useEffect(() => {}, []);
 
-  }, []);
-  
   useEffect(() => {
+    // console.log(alltasks);
     setTasksToDisplay(alltasks);
     localStorage.setItem("tasks", JSON.stringify(alltasks));
   }, [alltasks]);
 
-  
   return (
     <div className="container">
-      <AppHeader addtask={addtask} alltasks={alltasks}/>
+      <AppHeader addtask={addtask} alltasks={alltasks} />
       <div className="box-container tasks">
         {tasksToDisplay && (
           <Tasklist
