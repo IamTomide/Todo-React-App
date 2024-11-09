@@ -42,7 +42,7 @@ const Tasks = () => {
 
   return (
     <div className={`body_container ${theme}`}>
-      <div className={`container`}>
+      <div className={"container"}>
         <AppHeader addtask={addtask} alltasks={alltasks} />
         <div className="box-container tasks">
           {tasksToDisplay && (
@@ -68,6 +68,7 @@ const Tasks = () => {
         <div className="actions bottom-div">
           <Filters alltasks={alltasks} setTasksToDisplay={setTasksToDisplay} />
         </div>
+        <p class="draginfo">Drag and drop to re-order list</p>
       </div>
     </div>
   );

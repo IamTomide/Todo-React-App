@@ -35,6 +35,7 @@ const Task = ({ alltasks, setTasksToDisplay, setTasks }) => {
       list={alltasks}
       onStart={() => setIsSorting(true)}
       setList={(updatedList) => updateOrder(updatedList)}
+      ghostClass='drag'
       animation={150}
       delayOnTouchStart={true}
       delay={120}
